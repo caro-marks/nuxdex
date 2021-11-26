@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <p>HOME</p>
+    <HomeTemplate />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .home {
-  border: 1px solid green;
+  border: 0.25em solid color('grass');
 }
 </style>

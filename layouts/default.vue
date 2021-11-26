@@ -10,7 +10,7 @@
 
 <style lang="scss" scoped>
 .default {
-  border: 1px solid greenyellow;
+  border: 0.25em solid color(green);
   margin-top: 4rem;
   display: grid;
   grid-gap: 6rem;
