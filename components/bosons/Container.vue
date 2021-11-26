@@ -8,7 +8,7 @@
 
 <style lang="scss" scoped>
 .container {
-  border: 1px solid color('dark');
+  border: 0.25em solid color('bug');
   margin: 0 auto;
   max-width: 1070px;
   @include screen('small') {
