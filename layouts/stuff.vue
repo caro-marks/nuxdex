@@ -1,16 +1,16 @@
 <template>
   <div class="default">
     <p>layout started</p>
-    <Container>
-      <Nuxt />
-    </Container>
+    <!-- <Container> -->
+    <Nuxt />
+    <!-- </Container> -->
     <p>layout ending</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .default {
-  border: 0.25em solid color(green);
+  border: 0.25em solid color('grass');
   margin-top: 4rem;
   display: grid;
   grid-gap: 6rem;
