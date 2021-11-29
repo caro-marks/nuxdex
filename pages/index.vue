@@ -1,11 +1,22 @@
 <template>
   <div class="home">
+    <!-- <p>{{ results }}</p> -->
     <HomeTemplate />
   </div>
 </template>
 
-<style lang="scss" scoped>
-.home {
-  border: 0.25em solid color('grass');
-}
-</style>
+<script lang="ts">
+import Vue from 'vue'
+import { pokemons } from '@/store'
+
+export default Vue.extend({
+  async asyncData() {
+    await pokemons.index()
+  },
+  // computed: {
+  //   results() {
+  //     return pokemons.$pokemonsList[51]
+  //   },
+  // },
+})
+</script>
