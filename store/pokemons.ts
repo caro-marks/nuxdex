@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { $axios } from '@/utils/nuxt-instance'
-import { ResultsLists, Pokemon } from '@/models'
+import { CommonPattern, Pokemon, parsePokemonInfo } from '@/models'
 
 @Module({ name: 'pokemons', stateFactory: true, namespaced: true })
 export default class Pokemons extends VuexModule {
@@ -12,18 +12,12 @@ export default class Pokemons extends VuexModule {
   private hasNext = false as boolean
   private hasCompleted = false as boolean
   private searchHasError = false as boolean
+  private pokemonId = null as unknown as number
   private limit = 50 as number
   private offset = 0 as number
 
   public get $pokemonsList() {
-    return this.pokemonsList.map((info) => ({
-      id: info.id,
-      name: info.name,
-      types: info.types.map(({ type }) => type.name),
-      sprites:
-        info.sprites.front_default ||
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png',
-    }))
+    return this.pokemonsList.map(parsePokemonInfo)
   }
 
   public get $isSearch() {
@@ -48,6 +42,10 @@ export default class Pokemons extends VuexModule {
 
   public get $hasError() {
     return this.hasError
+  }
+
+  public get $pokemonId() {
+    return this.pokemonId
   }
 
   @Mutation
@@ -104,6 +102,12 @@ export default class Pokemons extends VuexModule {
     this.searchHasError = flag
   }
 
+  @Mutation
+  private SET_POKEMON_ID(id: number) {
+    this.isPokemonSearch = false
+    this.pokemonId = id
+  }
+
   @Action
   public async index() {
     try {
@@ -113,7 +117,7 @@ export default class Pokemons extends VuexModule {
         `/pokemon?limit=${this.limit}&offset=${this.offset}`
       )
       if (results?.results?.length) {
-        const prepareInfo = results.results.map((item: ResultsLists) =>
+        const prepareInfo = results.results.map((item: CommonPattern) =>
           $axios.$get(`/pokemon/${item.name}`)
         )
         const pokemonsList = await Promise.all(prepareInfo)
@@ -166,5 +170,10 @@ export default class Pokemons extends VuexModule {
   @Action
   public resetList() {
     this.context.commit('RESET_LIST')
+  }
+
+  @Action
+  public setPokemonId(id: number) {
+    this.context.commit('SET_POKEMON_ID', id)
   }
 }

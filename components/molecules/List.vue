@@ -5,6 +5,7 @@
       We couldn't find this pokemon
     </p>
     <ListItem v-else-if="isPokemonSearch" v-bind="pokemonsList[0]" />
+    <Description v-else-if="pokemonId" :id="pokemonId" />
     <template v-else>
       <ListItem
         v-for="pokemon in pokemonsList"
@@ -33,6 +34,9 @@ export default Vue.extend({
     },
     searchHasError() {
       return pokemons.$searchHasError
+    },
+    pokemonId() {
+      return pokemons.$pokemonId
     },
   },
   methods: {

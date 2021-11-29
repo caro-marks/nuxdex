@@ -1,5 +1,5 @@
 <template>
-  <li class="list__item">
+  <li class="list__item" @click="selectPokemon">
     <img :src="sprites" :alt="name" class="sprite" />
     <div class="informations">
       <h3 class="identification">
@@ -22,6 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { pokemons } from '@/store'
 
 export default Vue.extend({
   props: {
@@ -46,6 +47,11 @@ export default Vue.extend({
           values.every((value) => typeof value === 'string')
         )
       },
+    },
+  },
+  methods: {
+    selectPokemon() {
+      pokemons.setPokemonId(this.id)
     },
   },
 })
